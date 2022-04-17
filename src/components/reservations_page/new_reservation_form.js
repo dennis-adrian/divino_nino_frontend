@@ -1,13 +1,15 @@
 import React from 'react';
 import moment from 'moment';
 
-import Form from 'react-bootstrap/Form'
-import Row from 'react-bootstrap/Row';
+import Form from 'react-bootstrap/Form';
 
 const NewReservationForm = ({
-  doctors,
+  doctors = [],
   handleDateChange,
+  handleScheduleChange,
   handleSpecialtyChange,
+  schedulesFilteredByDateAndSpecialty,
+  selectedDate,
   selectedSpecialty,
   specialties
 }) => {
@@ -34,28 +36,28 @@ const NewReservationForm = ({
 
       { selectedSpecialty &&
         <React.Fragment>
-          <Row className="form-row">
-            <Form.Group className="mb-3 col-md-6" controlId="reservation_date">
-              <Form.Label>Fecha de la reserva</Form.Label>
-              <Form.Control type="date" onChange={e => handleDateChange(e.target.value)}/>
-            </Form.Group>
-
-            <Form.Group className="mb-3 col-md-6" controlId="reservation_time">
-              <Form.Label>Hora de la reserva</Form.Label>
-              <Form.Control type="time"/>
-            </Form.Group>
-          </Row>
-
-          <Form.Group className="mb-3" controlId="doctor">
-            <Form.Label>Médico</Form.Label>
-            <Form.Select aria-label="Default select example" onChange={e => handleSpecialtyChange(e.target.value)}>
-              <option value={0} defaultValue={true}>Elija una opción</option>
-              { doctors.map((doctor) => (
-                  <option key={doctor.id} value={doctor.id}>Dr(a) {doctor.firstName} {doctor.lastName}</option>
-                ))
-              }
-            </Form.Select>
+          <Form.Group className="mb-3 col-md-6" controlId="reservation_date">
+            <Form.Label>Fecha de la reserva</Form.Label>
+            <Form.Control type="date" onChange={e => handleDateChange(e.target.value)}/>
           </Form.Group>
+
+          {schedulesFilteredByDateAndSpecialty?.length > 0 &&
+            <Form.Group className="mb-3" controlId="doctor">
+              <Form.Label>Médico y hora de la reserva</Form.Label>
+              <Form.Select aria-label="Default select example" onChange={e => handleScheduleChange(e.target.value)}>
+                <option value={0} defaultValue={true}>Elija una opción</option>
+                { schedulesFilteredByDateAndSpecialty.map((schedule) => (
+                    <option 
+                      key={schedule.id} 
+                      value={schedule.id}
+                    >
+                      Dr(a) {schedule.doctor.firstName} {schedule.doctor.lastName} - {moment(schedule.startTime).format('HH.mm')}
+                    </option>
+                  ))
+                }
+              </Form.Select>
+            </Form.Group>
+          }
         </React.Fragment>
       }
     </Form>

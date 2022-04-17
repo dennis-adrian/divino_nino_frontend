@@ -2,6 +2,12 @@ import axios from 'axios';
 import camelcaseKeys from 'camelcase-keys';
 import snakecaseKeys from 'snakecase-keys';
 
+const csrfTokenTag = document.querySelector('meta[name="csrf-token"]');
+
+if (csrfTokenTag) {
+  axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfTokenTag.getAttribute('content');
+}
+
 function snakecaseBody(body) {
   if (!body) return null;
 

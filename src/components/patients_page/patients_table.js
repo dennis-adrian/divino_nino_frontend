@@ -21,6 +21,7 @@ const PatientsTable = ({ availableSchedules, patients }) => {
         availableSchedules={availableSchedules}
         patient={selectedPatient}
         show={showNewReservationModal}
+        setShowNewReservationModal={setShowNewReservationModal}
         onHide={() => setShowNewReservationModal(false)}
       />
       <Table className="mt-4" striped bordered hover size="sm">
