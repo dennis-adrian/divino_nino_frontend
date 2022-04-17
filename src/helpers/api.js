@@ -53,23 +53,7 @@ export function patch(path, body, options = {}) {
 }
 
 export function get(path, options = {}) {
-  const url = 'http://localhost:3000/patients';
-  return axios.get(url)
-    .then((response) => {
-      try {
-        return camelcaseKeys(response.data, {deep: true});
-      } catch(error) {
-        return response.data
-      }
-    })
-    .catch((error) => {
-      let errors;
-      if (error.response) {
-        errors = error.response.data.errors;
-      }
-
-      throw errors || error;
-    });
+  return makeRequest('get', path, snakecaseParams(options));
 }
 
 export function deleteRequest(path, options = {}) {

@@ -1,8 +1,14 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
+
+import Container from 'react-bootstrap/Container';
+import NewReservationBar from './new_reservation_bar';
 
 const ReservationsPage = () => {
+
   return (
-    <div>ReservationsPage</div>
+    <Container className="pt-4">
+      <NewReservationBar />
+    </Container>
   )
 }
 

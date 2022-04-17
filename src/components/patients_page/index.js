@@ -10,8 +10,14 @@ const fetchPatients = async() => {
   return await get(url);
 }
 
+const fetchSchedules = async() => {
+  const url = 'http://localhost:3000/schedules?available=true';
+  return await get(url);
+}
+
 const PatientsPage = () => {
   const [patients, setPatients] = useState([]);
+  const [availableSchedules, setAvailableSchedules] = useState([]);
 
   useEffect(() => {
     fetchPatients().then(data => {
@@ -19,9 +25,18 @@ const PatientsPage = () => {
     });
   }, []);
 
+  useEffect(() => {
+    fetchSchedules().then(data => {
+      setAvailableSchedules(data.schedules)
+    });
+  }, []);
+
   return (
     <Container>
-      <PatientsTable patients={patients}/>
+      <PatientsTable
+        patients={patients}
+        availableSchedules={availableSchedules}
+      />
     </Container>
   );
 }
