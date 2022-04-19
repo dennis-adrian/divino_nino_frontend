@@ -1,12 +1,17 @@
 import React from 'react';
 import Table from 'react-bootstrap/Table';
 
-const IncomeReportTable = () => {
+const IncomeReportTable = ({ reservations }) => {
+  
+  const totalIncome = () => {
+    const totalCosts = reservations.map(reservation => reservation.invoice?.totalCost)
+    return totalCosts.reduce((partialSum, a) => partialSum + a, 0)
+  };
+
   return (
     <Table striped bordered hover>
       <thead>
         <tr>
-          <th>Nro.</th>
           <th>Nro. de Consulta</th>
           <th>Tipo de Consulta</th>
           <th>Paciente</th>
@@ -16,56 +21,23 @@ const IncomeReportTable = () => {
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>1</td>
-          <td>1245</td>
-          <td>Regular</td>
-          <td>Andrea Gonzales</td>
-          <td>Medicina General</td>
-          <td>12/04/2022</td>
-          <td>100</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>1246</td>
-          <td>Reconsulta</td>
-          <td>Ismael Gonzales</td>
-          <td>Pediatría</td>
-          <td>12/04/2022</td>
-          <td>50</td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td>1247</td>
-          <td>Regular</td>
-          <td>Carla Gomez</td>
-          <td>Ginecología</td>
-          <td>13/04/2022</td>
-          <td>100</td>
-        </tr>
-        <tr>
-          <td>4</td>
-          <td>1248</td>
-          <td>Reconsulta</td>
-          <td>Antonieta Cortez</td>
-          <td>Ginecología</td>
-          <td>14/04/2022</td>
-          <td>50</td>
-        </tr>
-        <tr>
-          <td>5</td>
-          <td>1249</td>
-          <td>Regular</td>
-          <td>Pedro Mendoza</td>
-          <td>Medicina General</td>
-          <td>15/04/2022</td>
-          <td>100</td>
-        </tr>
+        {
+          reservations.map(reservation => (
+            <tr key={reservation.id}>
+              <td>{reservation.invoice.number}</td>
+              <td>Regular</td>
+              <td>{reservation.patient.firstName} {reservation.patient.lastName}</td>
+              <td>{reservation.specialty.name}</td>
+              <td>{reservation.dateMade}</td>
+              <td>{reservation.invoice.totalCost}</td>
+            </tr>
+          ))
+        }
       </tbody>
       <tfoot>
         <tr>
-          <td colSpan={6}>Ingresos Totales (Bs)</td>
-          <td>400</td>
+          <td colSpan={5}>Ingresos Totales (Bs)</td>
+          <td>{totalIncome()}</td>
         </tr>
       </tfoot>
     </Table>

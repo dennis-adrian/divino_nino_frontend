@@ -5,12 +5,21 @@ import Form from 'react-bootstrap/Form';
 const NewInvoiceForm = () => {
   return (
     <Form>
+      <Form.Group className="mb-3" controlId="invoice_number">
+        <Form.Label>Número de Factura</Form.Label>
+        <Form.Control type="text" />
+      </Form.Group>
       <Form.Group className="mb-3" controlId="client">
-        <Form.Label>Cliente</Form.Label>
-        <Form.Select aria-label="Default select example">
-          <option value="regular" defaultValue={true}>Regular - 100Bs</option>
-          <option value="followup">Reconsulta - 50Bs</option>
-        </Form.Select>
+        <Form.Label>Nombre del Cliente</Form.Label>
+        <Form.Control type="text" placeholder="Ingrese el nombre del cliente" />
+      </Form.Group>
+      <Form.Group className="mb-3" controlId="client">
+        <Form.Label>Apellido del Cliente</Form.Label>
+        <Form.Control type="text" placeholder="Ingrese el apellido del cliente" />
+      </Form.Group>
+      <Form.Group className="mb-3" controlId="client">
+        <Form.Label>NIT</Form.Label>
+        <Form.Control type="text" placeholder="Ingrese el NIT del cliente" />
       </Form.Group>
     </Form>
   )

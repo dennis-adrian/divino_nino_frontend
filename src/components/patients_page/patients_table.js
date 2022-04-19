@@ -48,12 +48,12 @@ const PatientsTable = ({ availableSchedules, patients }) => {
                       onClick={() => handleAddReservationClick(patient)
                     }/>
                   </td>
-                  <td className="text-center">
+                  {/* <td className="text-center">
                     <FontAwesomeIcon icon={faEye} />
                   </td>
                   <td className="text-center">
                     <FontAwesomeIcon icon={faPenToSquare} />
-                  </td>
+                  </td> */}
                 </tr>
             ))
           }

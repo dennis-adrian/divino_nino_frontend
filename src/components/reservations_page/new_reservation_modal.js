@@ -5,6 +5,8 @@ import { post } from '../../helpers/api'
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import NewReservationForm from './new_reservation_form';
+import NewInvoiceForm from './new_invoice_form';
+
 import moment from 'moment';
 
 const NewReservationModal = (props) => {
@@ -12,6 +14,10 @@ const NewReservationModal = (props) => {
   const [selectedDate, setSelectedDate] = useState();
   const [selectedSchedule, setSelectedSchedule] = useState();
   const [canSubmit, setCanSubmit] = useState(false);
+  const [clientName, setClientName] = useState();
+  const [clientLastName, setClientLastName] = useState();
+  const [nit, setNit] = useState();
+  const [invoiceNumber, setInvoiceNumber] = useState();
 
   const { availableSchedules, patient, show, setShowNewReservationModal } = props;
 
@@ -67,9 +73,33 @@ const NewReservationModal = (props) => {
     setSelectedDate(date);
   }
 
-  const handleScheduleChange = (schedule_id) => {
-    if (schedule_id) {
-      setSelectedSchedule(availableSchedules.find(schedule => schedule.id === parseInt(schedule_id)));
+  const handleScheduleChange = (scheduleId) => {
+    if (scheduleId) {
+      setSelectedSchedule(availableSchedules.find(schedule => schedule.id === parseInt(scheduleId)));
+    }
+  }
+
+  const handleInvoiceNumber = (invoiceNumber) => {
+    if(invoiceNumber) {
+      setInvoiceNumber(invoiceNumber);
+    }
+  }
+
+  const handleClientNameChange = (name) => {
+    if (name) {
+      setClientName(name);
+    }
+  }
+
+  const handleClientLastNameChange = (lastName) => {
+    if (lastName) {
+      setClientLastName(lastName);
+    }
+  }
+
+  const handleNitChange = (nit) => {
+    if (nit) {
+      setNit(nit);
     }
   }
 
@@ -81,6 +111,16 @@ const NewReservationModal = (props) => {
       patientId: patient.id,
       scheduleId: selectedSchedule.id,
       reservationFeeId: 1,
+      invoiceAttributes: {
+        number: invoiceNumber,
+        creationDate: moment().format('DD/MM/yyyy'),
+        totalCost: '100',
+        clientAttributes: {
+          clientName,
+          clientLastName,
+          nit
+        }
+      },
     })
     response.then((res) => {
       if (res.id) {
@@ -113,7 +153,7 @@ const NewReservationModal = (props) => {
           specialties={filterSpecialties()}
         />
         <h5>Datos de Facturación</h5>
-
+        <NewInvoiceForm />
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={props.onHide}>Close</Button>
