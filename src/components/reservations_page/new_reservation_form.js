@@ -14,7 +14,7 @@ const NewReservationForm = ({
   specialties
 }) => {
   return (
-    <Form onSubmit={() => console.log('hello world')}>
+    <Form>
       <Form.Group className="mb-3" controlId="reservation_type">
         <Form.Label>Tipo de Reserva</Form.Label>
         <Form.Select aria-label="Default select example">
